@@ -69,6 +69,7 @@ class RNGoogleFit {
                           let obj = {};
                           obj.source = dev.source.appPackage + ((dev.source.stream) ? ":" + dev.source.stream : "");
                           obj.steps = this.buildDailySteps(dev.steps);
+                          obj.minSteps = this.buildMinuteSteps(dev.steps);
                           return obj;
                       }, this)
                   );
@@ -77,6 +78,11 @@ class RNGoogleFit {
               }
             }
         );
+    }
+
+    
+    buildMinuteSteps(steps) {
+        return steps.filter(step => step.steps > 0).map(step => { return {startDate: step.startDate, endDate: step.endDate, steps: step.steps}})
     }
 
     buildDailySteps(steps) {
